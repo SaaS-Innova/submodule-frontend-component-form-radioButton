@@ -8,7 +8,7 @@ import { FormFieldError } from "../formFieldError/FormFieldError";
 export const RadioButtonSelect = (props: IFormProps) => {
   const { attribute, form, fieldType } = props;
   const { label, options } = form[attribute];
-  const { required, disabled } = form[attribute].rules;
+  const { required, disabled,itemPerRow = 2 } = form[attribute].rules;
   const {
     control,
     formState: { errors },
@@ -46,6 +46,7 @@ export const RadioButtonSelect = (props: IFormProps) => {
       {label} {required && "*"}
     </label>
   );
+  const widthStyle = { width: `${100 / itemPerRow}%` };
 
   return (
     <div className={fieldClassName}>
@@ -54,7 +55,7 @@ export const RadioButtonSelect = (props: IFormProps) => {
         {options &&
           options.map((option) => {
             return (
-              <div className="md:col-6" key={option.value}>
+              <div className='flex p-2' key={option.value} style={widthStyle}>
                 <Controller
                   name={attribute}
                   control={control}
@@ -65,12 +66,12 @@ export const RadioButtonSelect = (props: IFormProps) => {
                         <RadioButton
                           onChange={(e) => field.onChange(e.value)}
                           value={option.value}
-                          inputId={option.label}
+                          inputId={`${field.name}_${option.value}`}
                           checked={option.value === field.value ? true : false}
                           disabled={disabled}
                           className={errors[attribute] ? "p-invalid" : ""}
                         />
-                        <label htmlFor={option.label} className="ml-2">
+                        <label htmlFor={`${field.name}_${option.value}`} className="ml-2">
                           {option.label}
                         </label>
                       </>

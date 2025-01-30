@@ -64,6 +64,7 @@ export const RadioButtonSelect = (props: IFormProps) => {
                   rules={inputValidator(form[attribute].rules, label)}
                   render={({ field }) => {
                     return (
+                      <>
                         <RadioButton
                           onChange={(e) => field.onChange(e.value)}
                           value={option.value}
@@ -78,6 +79,7 @@ export const RadioButtonSelect = (props: IFormProps) => {
                         >
                           {option.label}
                         </label>
+                      </>
                     );
                   }}
                 />

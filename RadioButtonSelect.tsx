@@ -8,7 +8,7 @@ import { FormFieldError } from "../formFieldError/FormFieldError";
 export const RadioButtonSelect = (props: IFormProps) => {
   const { attribute, form, fieldType } = props;
   const { label, options } = form[attribute];
-  const { required, disabled,itemPerRow = 2 } = form[attribute].rules;
+  const { required, disabled, itemPerRow = 2 } = form[attribute].rules;
   const {
     control,
     formState: { errors },
@@ -43,7 +43,9 @@ export const RadioButtonSelect = (props: IFormProps) => {
 
   const labelElement = (
     <label htmlFor={attribute} className={labelClassName}>
-      {label} {required && "*"}
+      <span className="capitalize-first">
+        {label} {required && "*"}
+      </span>
     </label>
   );
   const widthStyle = { width: `${100 / itemPerRow}%` };
@@ -55,14 +57,13 @@ export const RadioButtonSelect = (props: IFormProps) => {
         {options &&
           options.map((option) => {
             return (
-              <div className='flex p-2' key={option.value} style={widthStyle}>
+              <div className="flex p-2" key={option.value} style={widthStyle}>
                 <Controller
                   name={attribute}
                   control={control}
                   rules={inputValidator(form[attribute].rules, label)}
                   render={({ field }) => {
                     return (
-                      <>
                         <RadioButton
                           onChange={(e) => field.onChange(e.value)}
                           value={option.value}
@@ -71,10 +72,12 @@ export const RadioButtonSelect = (props: IFormProps) => {
                           disabled={disabled}
                           className={errors[attribute] ? "p-invalid" : ""}
                         />
-                        <label htmlFor={`${field.name}_${option.value}`} className="ml-2">
+                        <label
+                          htmlFor={`${field.name}_${option.value}`}
+                          className="ml-2"
+                        >
                           {option.label}
                         </label>
-                      </>
                     );
                   }}
                 />
